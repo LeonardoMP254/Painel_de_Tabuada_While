@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabuada com Operadores de Atribuição</title>
+    <link rel="stylesheet" href="">
+
+    <style>
+        body{
+            background-color: black;
+        }
+        .tabuada-bloco { 
+        display: inline-block; 
+        margin: 10px; 
+        padding: 15px; 
+        border: 1px solid #ccc; 
+        vertical-align: top; }
+
+        .bloco {
+            position: relative;
+            width: 600px;
+            margin: 10px;
+        }
+
+        .bloco img {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            width: 200%;
+            cursor: pointer;
+        }
+
+        /* Área onde a tabuada vai aparecer (parte branca do livro) */
+        #resultado {
+            position: absolute;
+            top: 310px;
+            left: 260px;
+            width: 550px; 
+            height: 365px; 
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bloco">
+
+    <!-- Imagem clicável -->
+    <img src="w0tmzm1jbklf1.png" alt="Livro" onclick="gerarTabuada()">
+
+    <audio id="player" controls="controls">
+	  <source src="LearnNew_Q1.wav" type="audio/wav" />
+	</audio>
+
+    <audio id="player2" controls="controls">
+	  <source src="Mus_Intro.wav" type="audio/wav" />
+	</audio>
+    
+    <!-- Tabuada aparece dentro da imagem -->
+    <div id="resultado"></div>
+
+</div>
+
+<script>
+let ativo = false;
+
+function gerarTabuada() {
+
+    let painel = document.getElementById("resultado");
+    let musicaGerar = document.getElementById("player");
+    let musicaLimpar = document.getElementById("player2");
+
+    if (ativo) {
+        painel.innerHTML = "";
+
+        musicaGerar.pause();
+        musicaGerar.currentTime = 0;
+
+        musicaLimpar.play();
+
+        ativo = false;
+        return;
+    }
+
+    let conteudoFinal = "";
+    let t = 0;
+           
+    while (t <= 9) { 
+        t++;
+
+        conteudoFinal += "<div class='tabuada-bloco'><h3>Tabuada do " + t + "</h3>";
+
+        let i = 0;
+        while (i <= 9) {
+            i++;
+            let resultado = t * i;
+            conteudoFinal += t + " x " + i + " = " + resultado + "<br>";  
+        }
+
+        conteudoFinal += "</div><br>";
+    } 
+
+    painel.innerHTML = conteudoFinal;
+
+    musicaLimpar.pause();
+    musicaLimpar.currentTime = 0;
+
+    musicaGerar.play();
+
+    ativo = true;
+}
+</script>
+
+</body>
+</html>
